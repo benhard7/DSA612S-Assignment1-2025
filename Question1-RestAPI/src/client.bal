@@ -3,7 +3,7 @@ import ballerina/io;
 
 public function main() returns error? {
     // Create a client to connect to our service
-    http:Client assetClient = check new ("http://localhost:9090");
+    http:Client _ = check new ("http://localhost:9090");
     
     // This will be our test client
     io:println("✅ Asset Management Client is ready!");
