@@ -1,7 +1,8 @@
 [package]
-org = "nust"
-name = "asset_management"
-version = "1.0.0"
+org = "i_am_relentle77"
+name = "Question1_RestAPI"
+version = "0.1.0"
+distribution = "2201.12.7"
 
 [build-options]
 observabilityIncluded = true
