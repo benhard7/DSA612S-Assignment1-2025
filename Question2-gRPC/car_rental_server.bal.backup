@@ -1,0 +1,51 @@
+import ballerina/grpc;
+import ballerina/log;
+
+// Database
+final map<Car> carDB = {};
+
+public function main() returns error? {
+    log:printInfo("🚗 Starting Car Rental gRPC Server on port 9000");
+    
+    grpc:Listener grpcListener = check new (9000);
+    check grpcListener.attach(new CarRentalService(), ());
+    check grpcListener.'start();
+    
+    // Keep server running
+    while true {
+        sleep(1);
+    }
+}
+
+// Simple sleep function
+function sleep(int seconds) {
+    // Basic sleep implementation
+}
+
+service class CarRentalService {
+    *grpc:Service;
+    
+    remote function AddCar(Car car) returns Car {
+        log:printInfo("AddCar called for: " + car.plate_number);
+        carDB[car.plate_number] = car;
+        return car;
+    }
+    
+    remote function SearchCar(CarRequest request) returns Car {
+        // Handle the nullable return from map lookup
+        Car? foundCar = carDB[request.plate_number];
+        
+        if foundCar is Car {
+            return foundCar;
+        } else {
+            // Return a default car when not found
+            return {
+                plate_number: request.plate_number,
+                make: "Not Found",
+                model: "Not Found", 
+                daily_price: 0.0,
+                status: "UNAVAILABLE"
+            };
+        }
+    }
+}

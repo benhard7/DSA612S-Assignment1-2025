@@ -1,2 +1,19 @@
-# DSA612S-Assignment1-2025
-Distributed Systems and Applications Assignment 1 - Asset Management System &amp; Car Rental System
+# DSA612S Assignment 1 - 2025
+
+## Group Members
+- [Add Your Names Here]
+
+## Project Structure
+
+### Question 1: REST API (Port 9090)
+- Asset Management System
+- Run: `cd Question1-RestAPI && bal run`
+
+### Question 2: gRPC (Port 9000)  
+- Car Rental System
+- Run: `cd Question2-gRPC && bal run car_rental_server.bal`
+
+## Setup
+1. Install Ballerina
+2. Clone this repo
+3. Run each service separately

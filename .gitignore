@@ -1,11 +1,22 @@
-# generated files
+# Ballerina
 target/
-generated/
+*.balx
+*.jar
 
-# dependencies
-Dependencies.toml
+# OS
+.DS_Store
+Thumbs.db
 
-# config files
-Config.toml
-# the config files used for testing, Uncomment the following line if you want to commit the test config files
-#!**/tests/Config.toml
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+logs/
+
+# Backup files
+*.backup
+*_backup
+*.bak
