@@ -1,7 +1,0 @@
-[package]
-org = "nust"
-name = "asset_management"
-version = "1.0.0"
-
-[build-options]
-observabilityIncluded = true

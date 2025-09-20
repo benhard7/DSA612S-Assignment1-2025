@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DSA612S Assignment 1 - 2025
 
 ## Group Members
@@ -18,3 +19,6 @@
 1. Install Ballerina
 2. Clone this repo
 3. Run each service separately
+=======
+"gRPC Car Rental System"
+>>>>>>> 9f7783afa7634f7e956e547f84c6c1e1ec273a29
