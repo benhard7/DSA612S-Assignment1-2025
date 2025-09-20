@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package carrental;
+
+service CarRentalService {
+    rpc AddCar(Car) returns (CarResponse);
+    rpc CreateUsers(stream User) returns (UserResponse);
+    rpc UpdateCar(Car) returns (CarResponse);
+    rpc RemoveCar(PlateRequest) returns (CarList);
+    rpc ListAvailableCars(FilterRequest) returns (stream Car);
+    rpc SearchCar(PlateRequest) returns (CarResponse);
+    rpc AddToCart(CartItem) returns (CartResponse);
+    rpc PlaceReservation(ReservationRequest) returns (ReservationResponse);
+}
+
+message Car {
+    string plate = 1;
+    string make = 2;
+    string model = 3;
+    int32 year = 4;
+    double daily_price = 5;
+    double mileage = 6;
+    string status = 7;
+}
+
+message User {
+    string username = 1;
+    string role = 2;
+}
+
+message PlateRequest {
+    string plate = 1;
+}
+
+message FilterRequest {
+    string search_term = 1;
+}
+
+message CartItem {
+    string username = 1;
+    string plate = 2;
+    string start_date = 3;
+    string end_date = 4;
+}
+
+message ReservationRequest {
+    string username = 1;
+}
+
+message CarResponse {
+    Car car = 1;
+    string message = 2;
+    bool success = 3;
+}
+
+message UserResponse {
+    string message = 1;
+    int32 users_created = 2;
+}
+
+message CarList {
+    repeated Car cars = 1;
+}
+
+message CartResponse {
+    string message = 1;
+    bool success = 2;
+}
+
+message ReservationResponse {
+    string message = 1;
+    bool success = 2;
+    double total_price = 3;
+}
