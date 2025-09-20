@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package car_rental;
+
+service CarRentalService {
+    // Admin operations
+    rpc AddCar(Car) returns (CarResponse);
+    rpc CreateUsers(stream User) returns (UserSummary);
+    rpc UpdateCar(Car) returns (CarResponse);
+    rpc RemoveCar(PlateRequest) returns (CarList);
+    
+    // Customer operations
+    rpc ListAvailableCars(FilterRequest) returns (stream Car);
+    rpc SearchCar(PlateRequest) returns (CarResponse);
+    rpc AddToCart(CartItem) returns (CartResponse);
+    rpc PlaceReservation(ReservationRequest) returns (ReservationResponse);
+}
+
+// Car definition
+message Car {
+    string plate_number = 1;
+    string make = 2;
+    string model = 3;
+    int32 year = 4;
+    double daily_price = 5;
+    double mileage = 6;
+    string status = 7; // AVAILABLE, UNAVAILABLE, RENTED
+}
+
+// User definition
+message User {
+    string user_id = 1;
+    string name = 2;
+    string role = 3; // CUSTOMER, ADMIN
+    string email = 4;
+}
+
+message UserSummary {
+    int32 total_users_created = 1;
+    repeated string user_ids = 2;
+}
+
+message PlateRequest {
+    string plate_number = 1;
+}
+
+message FilterRequest {
+    string search_term = 1;
+    int32 year = 2;
+}
+
+message CarResponse {
+    Car car = 1;
+    string message = 2;
+    bool success = 3;
+}
+
+message CarList {
+    repeated Car cars = 1;
+}
+
+message CartItem {
+    string user_id = 1;
+    string plate_number = 2;
+    string start_date = 3;  // Using string for simplicity
+    string end_date = 4;    // Using string for simplicity
+}
+
+message CartResponse {
+    bool success = 1;
+    string message = 2;
+    double total_price = 3;
+}
+
+message ReservationRequest {
+    string user_id = 1;
+}
+
+message ReservationResponse {
+    bool success = 1;
+    string message = 2;
+    string reservation_id = 3;
+    double total_amount = 4;
+}
