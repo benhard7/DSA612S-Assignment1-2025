@@ -2,19 +2,19 @@ import ballerina/http;
 
 type Task record {|
     string name;
-    string status; // e.g. PENDING, DONE
+    string status;
 |};
 
 type WorkOrder record {|
     string id;
     string description;
-    string status; // OPEN, IN_PROGRESS, CLOSED
+    string status;
     Task[] tasks;
 |};
 
 type Schedule record {|
     string name;
-    string dueDate; // YYYY-MM-DD
+    string dueDate;
 |};
 
 type Asset record {|
