@@ -152,3 +152,38 @@ service /assets on new http:Listener(8080) {
         return error("Asset not found");
     }
 }
+
+import ballerina/http;
+import ballerina/log;
+
+public function main() returns error? {
+    http:Client c = check new ("http://localhost:8080/assets");
+
+    // Create asset
+    json printer = {
+        assetTag: "EQ-001",
+        name: "3D Printer",
+        faculty: "Computing & Informatics",
+        department: "Software Engineering",
+        status: "ACTIVE",
+        acquiredDate: "2024-03-10",
+        components: {},
+        schedules: [],
+        workOrders: []
+    };
+
+    var resp1 = c->post("/", printer);
+    log:printInfo("Create asset response: " + resp1.toString());
+
+    // Get all assets
+    json resp2 = check c->get("/");
+    log:printInfo("All assets: " + resp2.toJsonString());
+
+    // Filter by faculty
+    json resp3 = check c->get("/faculty/Computing & Informatics");
+    log:printInfo("Faculty assets: " + resp3.toJsonString());
+
+    // Overdue
+    json resp4 = check c->get("/overdue");
+    log:printInfo("Overdue assets: " + resp4.toJsonString());
+}
