@@ -1,0 +1,19 @@
+[package]
+org = "carrental"
+name = "car_rental_system"
+version = "0.1.0"
+
+[[platform.java11.dependency]]
+groupId = "io.ballerina.stdlib"
+artifactId = "grpc"
+version = "1.9.0"
+
+[[platform.java11.dependency]]
+groupId = "io.ballerina.stdlib"
+artifactId = "io"
+version = "1.0.0"
+
+[[platform.java11.dependency]]
+groupId = "io.ballerina.stdlib"
+artifactId = "time"
+version = "1.0.0"
