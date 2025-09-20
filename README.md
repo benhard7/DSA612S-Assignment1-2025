@@ -1,7 +1,8 @@
 # DSA612S Assignment 1 - 2025
 
 ## Group Members
-- [Add Your Names Here]
+- Isack Teofilus 224082760
+-
 
 ## Project Structure
 
