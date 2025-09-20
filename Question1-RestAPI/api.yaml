@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Asset Management API
+  title: Asset Management API for NUST
   description: API for managing university assets
   version: 1.0.0
 servers:
