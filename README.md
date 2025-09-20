@@ -2,11 +2,11 @@
 
 ## Group Members
 - Isack Teofilus 224082760
--
+- Zazuvirua Tjijombo 223049905
 
 ## Project Structure
 
-### Question 1: REST API (Port 9090)
+### Question 1: REST API (Port 8080)
 - Asset Management System
 - Run: `cd Question1-RestAPI && bal run`
 

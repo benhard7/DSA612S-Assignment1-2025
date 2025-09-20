@@ -1,0 +1,411 @@
+openapi: 3.0.0
+info:
+  title: Asset Management API for NUST
+  description: API for managing university assets
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /assets:
+    get:
+      summary: Retrieve all assets
+      operationId: getAllAssets
+      responses:
+        "200":
+          description: A list of all assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+    post:
+      summary: Create a new asset
+      operationId: createAsset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Asset"
+        required: true
+      responses:
+        "201":
+          description: Asset created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+  /assets/{assetTag}:
+    get:
+      summary: Retrieve an asset by its tag
+      operationId: getAssetByTag
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Asset details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    put:
+      summary: Update an existing asset
+      operationId: updateAsset
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Asset"
+        required: true
+      responses:
+        "200":
+          description: Asset updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    delete:
+      summary: Delete an asset
+      operationId: deleteAsset
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Asset deleted successfully
+  /assets/faculty/{faculty}:
+    get:
+      summary: Retrieve assets belonging to a specific faculty
+      operationId: getAssetsByFaculty
+      parameters:
+      - name: faculty
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A list of assets for the specified faculty
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+  /assets/overdue:
+    get:
+      summary: Retrieve assets with overdue maintenance schedules
+      operationId: getOverdueAssets
+      responses:
+        "200":
+          description: A list of overdue assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+  /assets/{assetTag}/components:
+    post:
+      summary: Add a component to an asset
+      operationId: addComponent
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Component"
+        required: true
+      responses:
+        "200":
+          description: Component added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    delete:
+      summary: Remove a component from an asset
+      operationId: removeComponent
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Component removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+  /assets/{assetTag}/schedules:
+    post:
+      summary: Add a maintenance schedule to an asset
+      operationId: addSchedule
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Schedule"
+        required: true
+      responses:
+        "200":
+          description: Schedule added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    delete:
+      summary: Remove a maintenance schedule from an asset
+      operationId: removeSchedule
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: scheduleId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Schedule removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+  /assets/{assetTag}/workorders:
+    put:
+      summary: Update a work order for an asset
+      operationId: updateWorkOrder
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workOrderId
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkOrder"
+        required: true
+      responses:
+        "200":
+          description: Work order updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    post:
+      summary: Create a work order for an asset
+      operationId: createWorkOrder
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkOrder"
+        required: true
+      responses:
+        "201":
+          description: Work order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    delete:
+      summary: Close a work order for an asset
+      operationId: closeWorkOrder
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workOrderId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Work order closed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+  /assets/{assetTag}/tasks:
+    post:
+      summary: Add a task to a work order
+      operationId: addTask
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workOrderId
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+        required: true
+      responses:
+        "200":
+          description: Task added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+    delete:
+      summary: Remove a task from a work order
+      operationId: removeTask
+      parameters:
+      - name: assetTag
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workOrderId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Task removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+components:
+  schemas:
+    Asset:
+      type: object
+      properties:
+        assetTag:
+          type: string
+        name:
+          type: string
+        faculty:
+          type: string
+        department:
+          type: string
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - UNDER_REPAIR
+          - DISPOSED
+        acquiredDate:
+          type: string
+          format: date
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/Component"
+        schedules:
+          type: array
+          items:
+            $ref: "#/components/schemas/Schedule"
+        workOrders:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkOrder"
+    Component:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+    Schedule:
+      type: object
+      properties:
+        id:
+          type: string
+        frequency:
+          type: string
+        nextDueDate:
+          type: string
+          format: date
+    WorkOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - OPEN
+          - IN_PROGRESS
+          - CLOSED
+        description:
+          type: string
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - COMPLETED
