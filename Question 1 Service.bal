@@ -33,28 +33,23 @@ map<Asset> assets = {};
 
 
 function isOverdue(string dueDate) returns boolean {
-    // Simple string comparison (works because YYYY-MM-DD format is lexically sortable)
-    string currentDate = "2025-09-20"; // Fixed current date as per assignment
+    string currentDate = "2025-09-20"; 
     
-    // If due date is earlier than current date, it's overdue
     return dueDate < currentDate;
 }
 
 
 service /assets on new http:Listener(8080) {
 
-    // Create asset
     resource function post .(Asset asset) returns string {
         assets[asset.assetTag] = asset;
         return "✅ Asset " + asset.assetTag + " created!";
     }
 
-    // Get all
     resource function get .() returns map<Asset> {
         return assets;
     }
 
-    // Get one
     resource function get [string id]() returns Asset|error {
         Asset? a = assets[id];
         if a is Asset {
@@ -63,7 +58,6 @@ service /assets on new http:Listener(8080) {
         return error("Not found");
     }
 
-    // Update
     resource function put [string id](Asset updated) returns string|error {
         if assets.hasKey(id) {
             assets[id] = updated;
@@ -72,7 +66,6 @@ service /assets on new http:Listener(8080) {
         return error("Not found");
     }
 
-    // Delete
     resource function delete [string id]() returns string|error {
         if assets.hasKey(id) {
             _ = assets.remove(id);
@@ -81,7 +74,6 @@ service /assets on new http:Listener(8080) {
         return error("Not found");
     }
 
-    // Filter by faculty
     resource function get faculty/[string fac]() returns Asset[] {
         Asset[] res = [];
         foreach var [_, a] in assets.entries() {
@@ -92,7 +84,6 @@ service /assets on new http:Listener(8080) {
         return res;
     }
 
-    // Overdue check
     resource function get overdue() returns Asset[] {
         Asset[] res = [];
         foreach var [_, a] in assets.entries() {
@@ -106,7 +97,6 @@ service /assets on new http:Listener(8080) {
         return res;
     }
 
-    // Add component
     resource function post [string id]/components(string key, string val) returns string|error {
         Asset? a = assets[id];
         if a is Asset {
@@ -117,7 +107,6 @@ service /assets on new http:Listener(8080) {
         return error("Not found");
     }
 
-    // Remove component
     resource function delete [string id]/components/[string key]() returns string|error {
         Asset? a = assets[id];
         if a is Asset {
@@ -128,7 +117,6 @@ service /assets on new http:Listener(8080) {
         return error("Not found");
     }
 
-    // Add schedule
     resource function post [string id]/schedules(Schedule s) returns string|error {
         Asset? a = assets[id];
         if a is Asset {
@@ -139,7 +127,6 @@ service /assets on new http:Listener(8080) {
         return error("Not found");
     }
 
-    // Add work order
     resource function post [string id]/workorders(WorkOrder w) returns string|error {
         Asset? a = assets[id];
         if a is Asset {
@@ -150,7 +137,6 @@ service /assets on new http:Listener(8080) {
         return error("Not found");
     }
 
-    // Add task
     resource function post [string id]/workorders/[string wid]/tasks(Task t) returns string|error {
         Asset? a = assets[id];
         if a is Asset {
