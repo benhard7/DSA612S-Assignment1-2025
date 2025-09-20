@@ -1,6 +1,5 @@
 import ballerina/http;
 
-// ===== Data types =====
 type Task record {|
     string name;
     string status; // e.g. PENDING, DONE
@@ -30,10 +29,9 @@ type Asset record {|
     WorkOrder[] workOrders;
 |};
 
-// ===== "Database" =====
 map<Asset> assets = {};
 
-// ===== Helper: crude overdue check (manual current date) =====
+
 function isOverdue(string dueDate) returns boolean {
     // Simple string comparison (works because YYYY-MM-DD format is lexically sortable)
     string currentDate = "2025-09-20"; // Fixed current date as per assignment
@@ -42,7 +40,7 @@ function isOverdue(string dueDate) returns boolean {
     return dueDate < currentDate;
 }
 
-// ===== Service =====
+
 service /assets on new http:Listener(8080) {
 
     // Create asset
