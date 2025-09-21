@@ -1,0 +1,115 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+package carrental;
+
+service CarRentalService {
+    rpc AddCar(AddCarRequest) returns (AddCarResponse);
+    rpc UpdateCar(UpdateCarRequest) returns (OperationResponse);
+    rpc RemoveCar(RemoveCarRequest) returns (OperationResponse);
+
+    rpc ListAvailableCars(AvailableCarsRequest) returns (ListAvailableCarsResponse);
+    rpc SearchCar(SearchCarRequest) returns (SearchCarResponse);
+    rpc AddToCart(AddToCartRequest) returns (OperationResponse);
+    rpc PlaceReservation(PlaceReservationRequest) returns (ReservationResponse);
+
+    rpc CreateUsers(stream User) returns (OperationResponse);
+
+}
+
+message Car {
+    string plate_number = 1;
+    string make = 2;
+    string model = 3;
+    int32 year = 4;
+    float daily_price = 5;
+    CarStatus status = 6;
+    int32 mileage = 7;
+}
+
+message AddCarRequest {
+    Car car = 1;
+}
+
+message AddCarResponse {
+    string plate_number = 1;
+    string message = 2;
+    bool success = 3;
+}
+
+message UpdateCarRequest {
+    string plate_number = 1;
+    optional string make = 2; 
+    optional string model = 3;
+    optional int32 year = 4;
+    optional float daily_price = 5;
+    optional int32 mileage = 6;
+    optional CarStatus status = 7;
+}
+
+message RemoveCarRequest {
+    string plate_number = 1; 
+}
+
+message AvailableCarsRequest {
+    optional string filter_make = 1;  
+    optional string filter_model = 2; 
+    optional int32 filter_year = 3;    
+    optional int32 max_results = 4;
+    optional CarStatus status = 5;
+
+}
+
+message ListAvailableCarsResponse{
+    repeated Car car =1;
+}
+message SearchCarRequest {
+    string plate_number = 1;
+    optional CarStatus status = 2;
+}
+
+message SearchCarResponse {
+    oneof result {
+        Car car = 1;               
+        string not_found_message = 2; 
+    }
+}
+
+message CartItem {
+    string plate_number = 1;
+    
+    google.protobuf.Timestamp start_date = 2; 
+    google.protobuf.Timestamp end_date = 3; 
+}
+
+message AddToCartRequest {
+    string user_id = 1; 
+    CartItem cart_item = 2; 
+}
+
+message PlaceReservationRequest {
+    string user_id = 1;
+    CarStatus status = 2;
+}
+message ReservationResponse {
+    string reservation_id = 1; 
+    string message = 2;        
+    bool success = 3;          
+    float total_price = 4;     
+    repeated CartItem reserved_items = 5; 
+}
+enum CarStatus {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_AVAILABLE = 1;
+    STATUS_UNAVAILABLE = 2;
+}
+
+message OperationResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message User {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+}
