@@ -1,19 +1,19 @@
 <<<<<<< HEAD
 # DSA612S Assignment 1 - 2025
 
-## Group Members
+Group Members
 - Isack Teofilus 224082760
 - Zazuvirua Tjijombo 223049905
 - Benhard Amutse 224061887
 - Osama K Billawer 224063804
 
-## Project Structure
+Project Structure
 
-### Question 1: REST API (Port 8080)
+Question 1: REST API (Port 8080)
 - Asset Management System
 - Run: `cd Question1-RestAPI && bal run`
 
-### Question 2: gRPC (Port 9000)  
+Question 2: gRPC (Port 9090)  
 - Car Rental System
 - Run: `cd Question2-gRPC && bal run car_rental_server.bal`
 
